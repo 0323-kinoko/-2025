@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roulette Simulation</title>
+    <style>
+        #roulette {
+            font-size: 2em;
+            text-align: center;
+            margin-top: 50px;
+        }
+        #spinButton {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <div id="roulette">-</div>
+    <button id="spinButton">抽選</button>
+
+    <script>
+document.addEventListener('DOMContentLoaded', (event) => {
+    const items = ["1000円", "2000円", "3000円", "5000円", "7000円", "10000円"];
+    const roulette = document.getElementById('roulette');
+    const spinButton = document.getElementById('spinButton');
+    let spinning = false;
+    let spinInterval;
+
+    function spin() {
+        if (spinning) return;
+        spinning = true;
+        spinButton.disabled = true;
+        let currentIndex = 0;
+
+        spinInterval = setInterval(() => {
+            roulette.textContent = items[currentIndex];
+            currentIndex = (currentIndex + 1) % items.length;
+        }, 100);
+    }
+
+    function stop() {
+        clearInterval(spinInterval);
+        roulette.textContent = "0円";
+        spinning = false;
+        spinButton.disabled = false;
+    }
+
+    spinButton.addEventListener('click', () => {
+        spin();
+        setTimeout(stop, 5000); // Spins for 2 seconds before stopping
+    });
+});
+    </script>
+</body>
+</html>
